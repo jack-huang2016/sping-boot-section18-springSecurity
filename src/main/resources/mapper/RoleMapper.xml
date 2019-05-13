@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.springboot.sample.mapper.RoleMapper">
+	<resultMap id="roleResultMap" type="com.springboot.sample.entity.Role">
+		<result property="id" column="id" ></result>
+		<result property="name" column="name" ></result>
+		<result property="nameRemark" column="name_remark" ></result>
+		<result property="createDate" column="CREATED_TIME" ></result>
+		<result property="modifiedDate" column="MODIFIED_TIME" ></result>
+		<result property="status" column="status" ></result>
+		<result property="isDelete" column="IS_DELETE" ></result>
+	</resultMap>
+	
+	<sql id="lieming">s.id, s.name, s.name_remark, s.CREATED_TIME, s.MODIFIED_TIME, s.status, s.IS_DELETE</sql>
+
+	<select id="getRolesByUserId" resultMap="roleResultMap" parameterType="Integer">
+		select 
+		<include refid="lieming" /> 
+		 from u_md_rs.role_test_temp s left join u_md_rs.USER_ROLE t on s.id=t.role_id 
+			where t.user_id= #{id}
+	</select>
+	
+</mapper>
